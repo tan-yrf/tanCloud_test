@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/icon/file.svg</file>
+        <file>images/icon/folder.svg</file>
+        <file>images/icon/checkbox.svg</file>
+        <file>images/icon/checkbox-checked.svg</file>
+    </qresource>
+</RCC>
