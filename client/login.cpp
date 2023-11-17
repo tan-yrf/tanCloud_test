@@ -6,12 +6,15 @@
 #include <QMessageBox>
 #include <QNetworkAddressEntry>
 
+
 Login::Login(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Login)
 {
     ui->setupUi(this);
     isConnectedServer = false;        //初始化，未连接到服务器
+
+    connect(&timer, &QTimer::timeout, this, &Login::onTimeout);
 }
 
 Login::~Login()
@@ -31,12 +34,24 @@ bool Login::isIpv4(QString ip)
 }
 
 
+/*超时还未登录就断开与服务器的连接*/
+void Login::onTimeout()
+{
+    emit closeConnectServer();
+    ui->btnConnectServer->setText(tr("连接服务器"));
+}
+
+
 /*实现客户端连接到服务器事件，
  * 一个客户端只能连接一个服务器，连接成功后改变按钮提示信息，
  * 再次点击按钮取消与当前服务器的连接
  * 如果在登录注册界面连接到其他服务器需要先取消与当前服务器的连接*/
 void Login::on_btnConnectServer_clicked()
 {
+    // 设置定时器间隔为 10 分钟（10 * 60 * 1000 毫秒
+    timer.setInterval(10 * 60 * 1000);
+    timer.start();
+
     if(ui->btnConnectServer->text() == "断开连接"){
         emit closeConnectServer();                      //发送关闭连接信号给客户端
         ui->btnConnectServer->setText(tr("连接服务器"));
@@ -44,7 +59,7 @@ void Login::on_btnConnectServer_clicked()
     }
     QString serverAddress = ui->editServerAddress->text();
     if(!isIpv4(serverAddress) || serverAddress.isNull()){  //无效ip地址
-        QMessageBox::about(this, tr("注册信息错误"), tr("这是一个无效的服务器地址！"));
+        QMessageBox::about(this, tr("服务器信息错误"), tr("这是一个无效的服务器地址！"));
         qDebug() <<"无效ip地址，重新输入";
     }else{              //连接到服务器
         emit connectServer(serverAddress);
@@ -139,6 +154,7 @@ void Login::onResultFromClient(qint8 resultType)
     case LOGIN_SUCCESS:
         //登录成功
         QMessageBox::about(this, tr("登录成功"), tr("登录成功"));
+        timer.stop();
         //发送信号跳转到主页面，并关闭登录注册页面
         emit loginSuccess();
         break;

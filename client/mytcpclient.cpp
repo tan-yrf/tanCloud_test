@@ -13,10 +13,11 @@ MyTcpClient::MyTcpClient()
 
     //数据传输部分
     dataTransfer = new DataTransfer(this);
+
     connectLoginWithDataTransfer();
     connectMyFileWithDataTransfer();
     connectSignalWithClient();
-
+    connectClientWindowWithDataTransfer();
 }
 
 
@@ -116,6 +117,16 @@ void MyTcpClient::connectMyFileWithDataTransfer()
     connect(dataTransfer, &DataTransfer::deleteFileComplete,
             clientWindow->mySpace->myFile, &MyFile::onDeleteFile);
 }
+
+
+/*绑定主界面与数据传输部分的信号与槽*/
+void MyTcpClient::connectClientWindowWithDataTransfer()
+{
+    //主界面发出的信号
+    connect(clientWindow, &ClientWindow::closeConnectServer,
+            dataTransfer, &DataTransfer::onCloseConnectServer);
+}
+
 
 void MyTcpClient::onLoginSuccess()
 {

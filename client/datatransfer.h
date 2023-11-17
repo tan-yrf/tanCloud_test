@@ -92,7 +92,7 @@ signals:
     void deleteFileComplete();                              //文件删除完成
 public slots:
     void onConnectServer(QString);                          //响应登录界面的连接服务器信号，与输入的地址的服务器连接
-    void onCloseConnectServer();                            //响应关闭服务器信号
+    void onCloseConnectServer();                            //响应断开连接信号
     void onSendRequestToServer(qint8, QString, QString);    //向服务器发送请求
     void onReadMessage();                                   //每当客户端接收信息就进行读取
     void onUploadFile(FileInfo);                            //接受上传文件的请求并进行处理

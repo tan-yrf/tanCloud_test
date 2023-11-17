@@ -197,10 +197,11 @@ void MyTcpSocketThread::handleRequest(qint8 requestType, QString str1, QString s
 
 /*-------------------------客户端请求处理模块--------------------------*/
 
-/*用户退出登录*/
+/*关闭连接，结束线程*/
 void MyTcpSocketThread::logoutExecution()
 {
     socket->close();                    //关闭socket
+    qDebug() << "结束线程" ;
     threadRunning = false;              //关闭线程
 }
 

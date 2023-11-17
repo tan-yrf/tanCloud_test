@@ -36,6 +36,7 @@ private:    //私有函数
     void connectLoginWithDataTransfer();                            //绑定登录注册页面和数据传输部分的信号与槽
     void connectSignalWithClient();                                 //绑定客户端接收的信号
     void connectMyFileWithDataTransfer();                           //绑定MyFile界面与数据传输部分的信号与槽
+    void connectClientWindowWithDataTransfer();                     //绑定主界面与数据传输部分的信号与槽
 signals:
     void fileListReq();
 

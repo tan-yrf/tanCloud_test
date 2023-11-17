@@ -18,6 +18,7 @@
 #define LOGIN_H
 
 #include <QWidget>
+#include <QTimer>
 
 namespace Ui {
 class Login;
@@ -34,6 +35,7 @@ public:
 private:    //私有变量
     Ui::Login *ui;
     bool isConnectedServer;                             //判断是否连接到服务器
+    QTimer timer;                                        //定时器
 private:    //私有函数
     bool isIpv4(QString);                               //判断字符串是否为ipv4地址，返回结果
 signals:
@@ -41,7 +43,8 @@ signals:
     void closeConnectServer();                          //断开与服务器的连接信号
     void sendRequestToClient(qint8, QString, QString);  //发送请求给客户端
     void loginSuccess();                                //登录成功，跳转主页面
-
+private slots:
+    void onTimeout();                                   //超时就断开与服务器的连接
 public slots:
     void on_btnConnectServer_clicked();                 //实现连接服务器
     void on_btnRegister_clicked();                      //实现发送注册请求

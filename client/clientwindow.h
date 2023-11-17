@@ -26,8 +26,12 @@ public:
     ClientWindow(QWidget *parent = nullptr);
     ~ClientWindow();
     MySpace* mySpace;
-
-private:
+private:    //私有函数
+    void sleep(qint32 msec);                                //延时函数,msec是需要延时的毫秒数
+    void closeEvent(QCloseEvent *event);                    //关闭事件
+signals:
+    void closeConnectServer();
+private:    //私有变量
     Ui::ClientWindow *ui;
     QButtonGroup* topButton;
 

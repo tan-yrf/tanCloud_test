@@ -1,4 +1,4 @@
-#include "MyDataModel.h"
+#include "mydatamodel.h"
 #include "qicon.h"
 
 MyDataModel::MyDataModel(QObject *parent) : QAbstractTableModel(parent) {}

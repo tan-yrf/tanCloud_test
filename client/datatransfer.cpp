@@ -106,7 +106,9 @@ void DataTransfer::onConnectServer(QString address)
 /*断开与服务器的连接*/
 void DataTransfer::onCloseConnectServer()
 {
-    tcpSocket->disconnectFromHost();
+    emit sendRequestToServer(EXIT_APPLICATION, "", "");
+    sleep(200);     //延时0.2s等待客户端将结束信息发送到服务器
+    tcpSocket->close();
     qDebug() << "连接状态" << tcpSocket->state();
 }
 /*------------------------初始化模块结束--------------------------*/
